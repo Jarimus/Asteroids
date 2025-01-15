@@ -1,4 +1,5 @@
 import pygame
+from time import sleep
 
 from constants import *
 from circleshape import *
@@ -41,6 +42,12 @@ def main():
 
 
         updatable.update(dt)
+
+        for asteroid in asteroids:
+            if player.collision(asteroid):
+                print("Game over!")
+                sleep(1)
+                return
 
         screen.fill( (0,0,0) )
         for sprite in drawable:
