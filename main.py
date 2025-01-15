@@ -23,7 +23,9 @@ def main():
                 return
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 return
-            
+
+
+        player.update(dt)   
 
         screen.fill( (0,0,0) )
         player.draw(screen)
