@@ -4,6 +4,7 @@ from time import sleep
 from constants import *
 from circleshape import *
 from player import *
+from shot import *
 from asteroid import *
 from asteroidfield import AsteroidField
 
@@ -21,16 +22,19 @@ def main():
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
 
-    #Spawn player
+    #Init player
     Player.containers = (updatable, drawable)
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
-    #Spawn asteroids
+    #Init asteroids
     Asteroid.containers = (asteroids, updatable, drawable)
 
-    #Set asteroidfield where new asteroids can spawn
+    #Init asteroidfield (for asteroid spawning)
     AsteroidField.containers = (updatable)
     asteroidfield = AsteroidField()
+
+    #Init shots
+    Shot.containers = (updatable, drawable)
 
     #main loop
     while True:
@@ -40,15 +44,17 @@ def main():
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 return
 
-
+        #update positions
         updatable.update(dt)
 
+        #check for collision (player-asteroid)
         for asteroid in asteroids:
             if player.collision(asteroid):
                 print("Game over!")
                 sleep(1)
                 return
 
+        #draw screen
         screen.fill( (0,0,0) )
         for sprite in drawable:
             sprite.draw(screen)
