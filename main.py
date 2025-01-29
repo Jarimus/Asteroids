@@ -3,15 +3,13 @@ from time import sleep
 
 from constants import *
 from circleshape import *
-from player import *
+from players import *
 from shot import *
 from asteroid import *
 from asteroidfield import AsteroidField
 
-def main():
-    print("Starting asteroids!")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
+def main_loop():
+
 
     #initialization
     pygame.init()
@@ -22,10 +20,13 @@ def main():
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
+    players = pygame.sprite.Group()
 
-    #Init player
-    Player.containers = (updatable, drawable)
-    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    #Init players
+    Player1.containers = (updatable, drawable, players)
+    Player2.containers = (updatable, drawable, players)
+    player1 = Player1(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2)
+    player2 = Player2(SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT / 2)
 
     #Init asteroids
     Asteroid.containers = (asteroids, updatable, drawable)
@@ -49,11 +50,13 @@ def main():
         updatable.update(dt)
 
         #check for collision (player-asteroid)
+        player: CircleShape; asteroid: Asteroid
         for asteroid in asteroids:
-            if player.collision(asteroid):
-                print("Game over!")
-                sleep(1)
-                return
+            for player in players:
+                if player.collision(asteroid):
+                    print("Game over!")
+                    sleep(1)
+                    return
         
         #check for collision (shot-asteroid):
         shot: Shot; asteroid: Asteroid
@@ -74,4 +77,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    print("Starting asteroids!")
+    print(f"Screen width: {SCREEN_WIDTH}")
+    print(f"Screen height: {SCREEN_HEIGHT}")
+    
+    main_loop()

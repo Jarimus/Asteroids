@@ -1,15 +1,16 @@
 import pygame
 
 from circleshape import CircleShape
-from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN
-from shot import *
+from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN, PLAYER_FRICTION
+from shot import Shot
 
-class Player(CircleShape):
+class Player1(CircleShape):
 
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.recharge = 0
+        self.speed = pygame.Vector2(0, 0)
 
         # in the player class
     def triangle(self):
@@ -39,15 +40,20 @@ class Player(CircleShape):
             self.move(dt)
         if keys[pygame.K_s]:
             self.move(-dt)
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_v]:
             self.shoot()
+
+        #apply friction, update position
+        self.speed *= PLAYER_FRICTION
+        self.position += self.speed * dt
         
         #cooldown for shots
-        self.recharge = max(0, self.recharge - dt)
+        if self.recharge != 0:
+            self.recharge = max(0, self.recharge - dt)
     
     def move(self, dt):
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        self.position += forward * PLAYER_SPEED * dt
+        self.speed += pygame.Vector2(0, 1).rotate(self.rotation) * dt * PLAYER_SPEED
+        
     
     def shoot(self):
         if self.recharge == 0:
@@ -56,3 +62,31 @@ class Player(CircleShape):
             for i in [-1, 0 ,1]:
                 shot = Shot(self.position.x, self.position.y)
                 shot.velocity = velocity.rotate(15 * i)
+
+class Player2(Player1):
+
+    def __init__(self, x, y):
+        super().__init__(x, y)
+    
+    def update(self, dt):
+        #handle key press
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_LEFT]:
+            self.rotate(-dt)
+        if keys[pygame.K_RIGHT]:
+            self.rotate(dt)
+        if keys[pygame.K_UP]:
+            self.move(dt)
+        if keys[pygame.K_DOWN]:
+            self.move(-dt)
+        if keys[pygame.K_PERIOD]:
+            self.shoot()
+
+        #apply friction, update position
+        self.speed *= PLAYER_FRICTION
+        self.position += self.speed * dt
+        
+        #cooldown for shots
+        if self.recharge != 0:
+            self.recharge = max(0, self.recharge - dt)
