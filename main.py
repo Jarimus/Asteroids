@@ -1,19 +1,17 @@
 import pygame
 from time import sleep
 
-from constants import *
-from circleshape import *
-from players import *
-from shot import *
-from asteroid import *
+from constants import FPS, SCREEN_HEIGHT, SCREEN_WIDTH
+from circleshape import CircleShape
+from players import Player1, Player2
+from shot import Shot
+from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from menu import menu_screen
 
-def main_loop():
+def main_loop(player_count):
+    
 
-
-    #initialization
-    pygame.init()
-    screen = pygame.display.set_mode( (SCREEN_WIDTH, SCREEN_HEIGHT) )
     time = pygame.time.Clock()
     dt = 0
     updatable = pygame.sprite.Group()
@@ -26,7 +24,8 @@ def main_loop():
     Player1.containers = (updatable, drawable, players)
     Player2.containers = (updatable, drawable, players)
     player1 = Player1(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2)
-    player2 = Player2(SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT / 2)
+    if player_count == 2:
+        player2 = Player2(SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT / 2)
 
     #Init asteroids
     Asteroid.containers = (asteroids, updatable, drawable)
@@ -71,14 +70,22 @@ def main_loop():
         for sprite in drawable:
             sprite.draw(screen)
 
+        dt = time.tick(FPS) / 1000
 
         pygame.display.flip()
-        dt = time.tick(FPS) / 1000
+
 
 
 if __name__ == "__main__":
+    #initialization
+    pygame.init()
+    pygame.display.set_caption("Asteroids")
+    screen = pygame.display.set_mode( (SCREEN_WIDTH, SCREEN_HEIGHT) )
+
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
+
+    player_count = menu_screen(screen)
     
-    main_loop()
+    main_loop(player_count)
