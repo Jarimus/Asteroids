@@ -45,7 +45,7 @@ class Player1(CircleShape):
 
         #apply friction, update position
         self.speed *= PLAYER_FRICTION
-        self.position += self.speed * dt
+        self.position += self.speed
         
         #cooldown for shots
         if self.recharge != 0:
@@ -85,7 +85,7 @@ class Player2(Player1):
 
         #apply friction, update position
         self.speed *= PLAYER_FRICTION
-        self.position += self.speed * dt
+        self.position += self.speed
         
         #cooldown for shots
         if self.recharge != 0:

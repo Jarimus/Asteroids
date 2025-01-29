@@ -34,7 +34,8 @@ def draw_menu(screen: pygame.Surface, choice: int):
 
     title_text = title_font.render("Asteroids", True, (255, 255, 255) )
 
-    #Menu has three options: "One player", "Two players", "Quit". Use UP and DOWN and ENTER to choose.
+    # Menu has three options: "One player", "Two players", "Quit". Use UP and DOWN and ENTER to choose.
+    # 'Choice' arrow updates it's position.
     if choice == 1:
         one_player = menu_font.render("< One player >", True, (255, 255, 255) )
         two_players = menu_font.render(" Two players ", True, (255, 255, 255) )
@@ -50,6 +51,7 @@ def draw_menu(screen: pygame.Surface, choice: int):
     
     lines.extend([title_text, one_player, two_players, quit_text])
 
+    #blit each line
     lines: list[pygame.Surface]
     for i, line in enumerate(lines):
         rect = line.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT / 4 + i*100))
