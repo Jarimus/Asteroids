@@ -40,7 +40,7 @@ class Player1(CircleShape):
             self.move(dt)
         if keys[pygame.K_s]:
             self.move(-dt)
-        if keys[pygame.K_v]:
+        if keys[pygame.K_SPACE]:
             self.shoot()
 
         #apply friction, update position

@@ -23,7 +23,10 @@ def main_loop(player_count):
     #Init players
     Player1.containers = (updatable, drawable, players)
     Player2.containers = (updatable, drawable, players)
-    player1 = Player1(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2)
+    if player_count == 2:
+        player1 = Player1(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2)
+    else:
+        player1 = Player1(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     if player_count == 2:
         player2 = Player2(SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT / 2)
     else:
@@ -70,9 +73,9 @@ def main_loop(player_count):
         #check for collision (player - player):
         if player2 and player1.collision(player2):
             p1_p2_v1 = pygame.Vector2.normalize( pygame.Vector2(player1.position.x - player2.position.x, player1.position.y - player2.position.y) )
-            p1_p2_sum = pygame.Vector2.length( player1.speed + player2.speed )
-            player1.speed = p1_p2_v1 * p1_p2_sum
-            player2.speed = - p1_p2_v1 * p1_p2_sum
+            p1_p2_sum = pygame.Vector2.length( player1.speed - player2.speed )
+            player1.speed = p1_p2_v1 * p1_p2_sum * 0.5
+            player2.speed = - p1_p2_v1 * p1_p2_sum * 0.5
 
         #draw screen
         screen.fill( (0,0,0) )

@@ -51,10 +51,15 @@ def draw_menu(screen: pygame.Surface, choice: int):
     
     lines.extend([title_text, one_player, two_players, quit_text])
 
-    #blit each line
+    #blit each line menu line
     lines: list[pygame.Surface]
     for i, line in enumerate(lines):
         rect = line.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT / 4 + i*100))
         screen.blit(line, rect)
+
+    # Info text at the bottom of the screen
+    info_text = menu_font.render("P1: WASD + Space | P2: Arrows + Period", True, (255, 255, 255) )
+    info_rect = info_text.get_rect( center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 40) )
+    screen.blit(info_text, info_rect)
 
     pygame.display.flip()
