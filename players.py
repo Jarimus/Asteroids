@@ -1,7 +1,7 @@
 import pygame
 
 from circleshape import CircleShape
-from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN, PLAYER_FRICTION
+from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN, PLAYER_FRICTION, SCREEN_WIDTH, SCREEN_HEIGHT
 from shot import Shot
 
 class Player1(CircleShape):
@@ -50,6 +50,20 @@ class Player1(CircleShape):
         #cooldown for shots
         if self.recharge != 0:
             self.recharge = max(0, self.recharge - dt)
+
+        #Edge collision
+        if self.position.x - self.radius <= 0:
+            self.speed.x *= -1
+            self.position += self.speed
+        elif self.position.x + self.radius >= SCREEN_WIDTH:
+            self.speed.x *= -1
+            self.position += self.speed
+        elif self.position.y - self.radius <= 0:
+            self.speed.y *= -1
+            self.position += self.speed
+        elif self.position.y + self.radius >= SCREEN_HEIGHT:
+            self.speed.y *= -1
+            self.position += self.speed
     
     def move(self, dt):
         self.speed += pygame.Vector2(0, 1).rotate(self.rotation) * dt * PLAYER_SPEED
@@ -90,3 +104,17 @@ class Player2(Player1):
         #cooldown for shots
         if self.recharge != 0:
             self.recharge = max(0, self.recharge - dt)
+        
+        #Edge collision
+        if self.position.x - self.radius <= 0:
+            self.speed.x *= -1
+            self.position += self.speed
+        elif self.position.x + self.radius >= SCREEN_WIDTH:
+            self.speed.x *= -1
+            self.position += self.speed
+        elif self.position.y - self.radius <= 0:
+            self.speed.y *= -1
+            self.position += self.speed
+        elif self.position.y + self.radius >= SCREEN_HEIGHT:
+            self.speed.y *= -1
+            self.position += self.speed
