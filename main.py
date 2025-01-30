@@ -7,7 +7,7 @@ from players import Player1, Player2
 from shot import Shot
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
-from menu import menu_screen
+from ui import menu_screen, score_track
 
 def main_loop(player_count):
     
@@ -19,6 +19,7 @@ def main_loop(player_count):
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
     players = pygame.sprite.Group()
+    score = 0
 
     #Init players
     Player1.containers = (updatable, drawable, players)
@@ -69,6 +70,7 @@ def main_loop(player_count):
                 if shot.collision(asteroid):
                     shot.kill()
                     asteroid.split()
+                    score += 1
         
         #check for collision (player - player):
         if player2 and player1.collision(player2):
@@ -81,6 +83,9 @@ def main_loop(player_count):
         screen.fill( (0,0,0) )
         for sprite in drawable:
             sprite.draw(screen)
+        
+        #draw ui
+        score_track(screen, score)
 
         dt = time.tick(FPS) / 1000
 

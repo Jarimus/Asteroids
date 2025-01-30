@@ -1,1 +1,1 @@
-A simple guided pygame-project for a course in [Boot.Dev](https://boot.dev)
+A simple guided pygame-project for a course on [Boot.Dev](https://boot.dev)

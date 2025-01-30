@@ -63,3 +63,8 @@ def draw_menu(screen: pygame.Surface, choice: int):
     screen.blit(info_text, info_rect)
 
     pygame.display.flip()
+
+def score_track(screen: pygame.Surface, score: int):
+    score_text = menu_font.render(f"Score: {score}", True, (255, 255, 255))
+    score_rect = score_text.get_rect( center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 40))
+    screen.blit(score_text, score_rect)
