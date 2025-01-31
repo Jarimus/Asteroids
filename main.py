@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 from time import sleep
 
 from constants import FPS, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE_FONT
@@ -95,7 +95,9 @@ def game_over(score: int):
     screen.blit(game_over_text, game_over_rect)
     pygame.display.flip()
     sleep(2)
-    quit()
+    pygame.display.quit()
+    pygame.quit()
+    sys.exit()
 
 
 
