@@ -10,7 +10,8 @@ jobs:
         with:
           #python_ver: '3.6'
           #pyinstaller_ver: '==5.13.2'
-          spec: 'main.py'
+          #spec: 'src/build.spec'
           requirements: 'requirements.txt'
-          upload_exe_with_name: 'Asteroids.exe'
+          upload_exe_with_name: 'Asteroids'
           options: --onefile, --noconsole
+          #spec_options: # any custom arguments you want like: `--debug`
