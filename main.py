@@ -1,7 +1,7 @@
 import pygame
 from time import sleep
 
-from constants import FPS, SCREEN_HEIGHT, SCREEN_WIDTH
+from constants import FPS, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE_FONT
 from circleshape import CircleShape
 from players import Player1, Player2
 from shot import Shot
@@ -59,10 +59,7 @@ def main_loop(player_count):
         for asteroid in asteroids:
             for player in players:
                 if player.collision(asteroid):
-                    print("Game over!")
-                    sleep(1)
-                    return
-        
+                    game_over(score)
         #check for collision (shot-asteroid):
         shot: Shot; asteroid: Asteroid
         for shot in shots:
@@ -90,6 +87,15 @@ def main_loop(player_count):
         dt = time.tick(FPS) / 1000
 
         pygame.display.flip()
+
+def game_over(score: int):
+    print(f"Game over! You scored {score} points!")
+    game_over_text = TITLE_FONT.render("Game Over!", True, (255, 100, 100))
+    game_over_rect = game_over_text.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
+    screen.blit(game_over_text, game_over_rect)
+    pygame.display.flip()
+    sleep(2)
+    quit()
 
 
 

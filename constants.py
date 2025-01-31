@@ -1,6 +1,12 @@
+import pygame
+
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 FPS = 60
+
+pygame.font.init()
+TITLE_FONT = pygame.font.SysFont("Arial", 90)
+MENU_FONT = pygame.font.SysFont("Arial", 48)
 
 ASTEROID_MIN_RADIUS = 20
 ASTEROID_KINDS = 4
@@ -15,5 +21,6 @@ PLAYER_SPEED = 10
 PLAYER_SHOOT_COOLDOWN = 1
 PLAYER_SHOOT_SPEED = 600
 PLAYER_FRICTION = 0.97
+PLAYER_RECOIL = 3
 
 SHOT_RADIUS = 5

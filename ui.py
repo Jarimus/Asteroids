@@ -1,10 +1,6 @@
 import pygame
 
-from constants import SCREEN_HEIGHT, SCREEN_WIDTH
-
-pygame.font.init()
-title_font = pygame.font.SysFont("Arial", 90)
-menu_font = pygame.font.SysFont("Arial", 48)
+from constants import SCREEN_HEIGHT, SCREEN_WIDTH, MENU_FONT, TITLE_FONT
 
 def menu_screen(screen: pygame.Surface):
 
@@ -32,22 +28,22 @@ def draw_menu(screen: pygame.Surface, choice: int):
 
     lines = []
 
-    title_text = title_font.render("Asteroids", True, (255, 255, 255) )
+    title_text = TITLE_FONT.render("Asteroids", True, (255, 255, 255) )
 
     # Menu has three options: "One player", "Two players", "Quit". Use UP and DOWN and ENTER to choose.
     # 'Choice' arrow updates it's position.
     if choice == 1:
-        one_player = menu_font.render("< One player >", True, (255, 255, 255) )
-        two_players = menu_font.render(" Two players ", True, (255, 255, 255) )
-        quit_text = menu_font.render(" Quit ", True, (255, 255,255) )
+        one_player = MENU_FONT.render("< One player >", True, (255, 255, 255) )
+        two_players = MENU_FONT.render(" Two players ", True, (255, 255, 255) )
+        quit_text = MENU_FONT.render(" Quit ", True, (255, 255,255) )
     elif choice == 2:
-        one_player = menu_font.render(" One player ", True, (255, 255, 255) )
-        two_players = menu_font.render("< Two players >", True, (255, 255, 255) )
-        quit_text = menu_font.render(" Quit ", True, (255, 255,255) )
+        one_player = MENU_FONT.render(" One player ", True, (255, 255, 255) )
+        two_players = MENU_FONT.render("< Two players >", True, (255, 255, 255) )
+        quit_text = MENU_FONT.render(" Quit ", True, (255, 255,255) )
     elif choice == 3:
-        one_player = menu_font.render(" One player ", True, (255, 255, 255) )
-        two_players = menu_font.render(" Two players ", True, (255, 255, 255) )
-        quit_text = menu_font.render("< Quit >", True, (255, 255,255) )
+        one_player = MENU_FONT.render(" One player ", True, (255, 255, 255) )
+        two_players = MENU_FONT.render(" Two players ", True, (255, 255, 255) )
+        quit_text = MENU_FONT.render("< Quit >", True, (255, 255,255) )
     
     lines.extend([title_text, one_player, two_players, quit_text])
 
@@ -58,13 +54,13 @@ def draw_menu(screen: pygame.Surface, choice: int):
         screen.blit(line, rect)
 
     # Info text at the bottom of the screen
-    info_text = menu_font.render("P1: WASD + Space | P2: Arrows + Period", True, (255, 255, 255) )
+    info_text = MENU_FONT.render("P1: WASD + Space | P2: Arrows + R-Shift", True, (255, 255, 255) )
     info_rect = info_text.get_rect( center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 40) )
     screen.blit(info_text, info_rect)
 
     pygame.display.flip()
 
 def score_track(screen: pygame.Surface, score: int):
-    score_text = menu_font.render(f"Score: {score}", True, (255, 255, 255))
+    score_text = MENU_FONT.render(f"Score: {score}", True, (255, 255, 255))
     score_rect = score_text.get_rect( center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 40))
     screen.blit(score_text, score_rect)
