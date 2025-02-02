@@ -47,9 +47,9 @@ def main_loop(settings: dict):
     while status == "Play":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return
+                return "Quit"
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                return
+                return "Quit"
 
         #update positions
         updatable.update(dt)
