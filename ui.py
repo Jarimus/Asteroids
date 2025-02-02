@@ -4,23 +4,31 @@ from constants import SCREEN_HEIGHT, SCREEN_WIDTH, MENU_FONT, TITLE_FONT
 
 def menu_screen(screen: pygame.Surface):
 
+    status = "menu"
+    settings = {}
     choice = 1
 
-    while True:
+    while status == "menu":
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
                 choice = min( 3, choice + 1 )
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
                 choice = max( 1, choice - 1 )
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                if choice != 3:
-                    return choice #return 1 or 2 (the number of players)
-                else:
-                    quit()
+                if choice == 1 or choice == 2:
+                    status = "Play"
+                    settings["player_count"] = choice
+                    break
+                elif choice == 3:
+                    status = "Quit"
+                    break
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                quit()
+                status = "Quit"
+                break
     
         draw_menu(screen, choice)
+    
+    return status, settings
 
 def draw_menu(screen: pygame.Surface, choice: int):
 

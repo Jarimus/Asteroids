@@ -9,9 +9,9 @@ from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from ui import menu_screen, score_track
 
-def main_loop(player_count):
+def main_loop(settings: dict):
     
-
+    status = "Play"
     time = pygame.time.Clock()
     dt = 0
     updatable = pygame.sprite.Group()
@@ -24,11 +24,11 @@ def main_loop(player_count):
     #Init players
     Player1.containers = (updatable, drawable, players)
     Player2.containers = (updatable, drawable, players)
-    if player_count == 2:
+    if settings["player_count"] == 2:
         player1 = Player1(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2)
     else:
         player1 = Player1(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-    if player_count == 2:
+    if settings["player_count"] == 2:
         player2 = Player2(SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT / 2)
     else:
         player2 = None
@@ -44,7 +44,7 @@ def main_loop(player_count):
     Shot.containers = (updatable, drawable, shots)
 
     #main loop
-    while True:
+    while status == "Play":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
@@ -59,7 +59,8 @@ def main_loop(player_count):
         for asteroid in asteroids:
             for player in players:
                 if player.collision(asteroid):
-                    game_over(score)
+                    status = game_over(score)
+                    return "menu"
         #check for collision (shot-asteroid):
         shot: Shot; asteroid: Asteroid
         for shot in shots:
@@ -95,9 +96,7 @@ def game_over(score: int):
     screen.blit(game_over_text, game_over_rect)
     pygame.display.flip()
     sleep(2)
-    pygame.display.quit()
-    pygame.quit()
-    sys.exit()
+    return "menu"
 
 
 
@@ -106,11 +105,20 @@ if __name__ == "__main__":
     pygame.init()
     pygame.display.set_caption("Asteroids")
     screen = pygame.display.set_mode( (SCREEN_WIDTH, SCREEN_HEIGHT) )
+    status = "menu"
 
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
 
-    player_count = menu_screen(screen)
+    while status != "Quit":
+
+        if status == "menu":
+            status, settings = menu_screen(screen)
+        
+        if status == "Play":
+            status = main_loop(settings)
     
-    main_loop(player_count)
+    pygame.display.quit()
+    pygame.quit()
+    sys.exit()
