@@ -4,7 +4,9 @@ from circleshape import CircleShape
 from constants import (
     PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_RECOIL, 
     PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN,
-    PLAYER_FRICTION, SCREEN_WIDTH, SCREEN_HEIGHT)
+    PLAYER_FRICTION, SCREEN_WIDTH, SCREEN_HEIGHT,
+    P1_DOWN, P1_LEFT, P1_RIGHT, P1_SHOOT, P1_UP,
+    P2_DOWN, P2_LEFT, P2_RIGHT, P2_SHOOT, P2_UP)
 from shot import Shot
 
 class Player1(CircleShape):
@@ -15,7 +17,6 @@ class Player1(CircleShape):
         self.recharge = 0
         self.speed = pygame.Vector2(0, 0)
 
-        # in the player class
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
@@ -25,7 +26,7 @@ class Player1(CircleShape):
         return [a, b, c]
     
     def draw(self, screen):
-        #Color changes from red to white when the gun cools down.
+        #Color changes from red to white when the gun is in cooldown.
         colour = (255, 255 - self.recharge/PLAYER_SHOOT_COOLDOWN*255, 255 - self.recharge/PLAYER_SHOOT_COOLDOWN*255)
         pygame.draw.polygon(screen, colour, self.triangle(), 2)
     
@@ -65,15 +66,15 @@ class Player1(CircleShape):
         """Handles feedback for pressing keys"""
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_a]:
+        if keys[P1_LEFT]:
             self.rotate(-dt)
-        if keys[pygame.K_d]:
+        if keys[P1_RIGHT]:
             self.rotate(dt)
-        if keys[pygame.K_w]:
+        if keys[P1_UP]:
             self.move(dt)
-        if keys[pygame.K_s]:
+        if keys[P1_DOWN]:
             self.move(-dt)
-        if keys[pygame.K_SPACE]:
+        if keys[P1_SHOOT]:
             self.shoot()
         
     
@@ -103,13 +104,13 @@ class Player2(Player1):
         """Handles feedback for pressing keys"""
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_LEFT]:
+        if keys[P2_LEFT]:
             self.rotate(-dt)
-        if keys[pygame.K_RIGHT]:
+        if keys[P2_RIGHT]:
             self.rotate(dt)
-        if keys[pygame.K_UP]:
+        if keys[P2_UP]:
             self.move(dt)
-        if keys[pygame.K_DOWN]:
+        if keys[P2_DOWN]:
             self.move(-dt)
-        if keys[pygame.K_RSHIFT]:
+        if keys[P2_SHOOT]:
             self.shoot()
