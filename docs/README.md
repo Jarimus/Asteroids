@@ -16,13 +16,13 @@ I have added features beyong the initial scope of the guided project. Extra feat
 - Shotgun instead of the basic one-shot gun
 - Main menu
 - Score
+- Two firing modes: single shot and shotgun
 
 ## Future features
 
 Here are some features I would like to implement in the future.
 
 - Increasing difficult: the higher the score, the more difficult the game gets.
-- Different guns to choose from (in the menu? during the game?)
 - Different enemy types
 - Health
 - Highscores stored in a file
