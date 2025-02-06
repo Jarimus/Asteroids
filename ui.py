@@ -36,7 +36,9 @@ def menu_screen(screen: pygame.Surface):
     
         draw_menu(screen, choice)
 
-    # REMINDER! Set the status here accordingly, whether the game is started in singleplayer or 2-player mode.
+
+    #short pause between menu screens
+    sleep(0.5)
 
     p1_choice = 1
     p2_choice = 1
@@ -51,7 +53,7 @@ def menu_screen(screen: pygame.Surface):
             elif event.type == pygame.KEYDOWN and event.key == P1_UP:
                 p1_choice = max( 1, p1_choice - 1 )
 
-            elif event.type == pygame.KEYUP and event.key == P1_SHOOT:
+            elif event.type == pygame.KEYDOWN and event.key == P1_SHOOT:
                 #Check if the other player is ready. If they are, start playing. Otherwise, set yourself as ready.
                 if status == "P2 ready":
                     status = "Play"
@@ -60,9 +62,9 @@ def menu_screen(screen: pygame.Surface):
 
                 #Save the weapon choice
                 if p1_choice == 1:
-                    settings["P1_weapon"] = "Single shot"
+                    settings["P1 weapon"] = "Single shot"
                 elif p1_choice == 2:
-                    settings["P1_weapon"] = "Shotgun"
+                    settings["P1 weapon"] = "Shotgun"
 
             #Player2 menu controls
             if event.type == pygame.KEYDOWN and event.key == P2_DOWN:
@@ -70,7 +72,7 @@ def menu_screen(screen: pygame.Surface):
             elif event.type == pygame.KEYDOWN and event.key == P2_UP:
                 p2_choice = max( 1, p2_choice - 1 )
 
-            elif event.type == pygame.KEYUP and event.key == P2_SHOOT:
+            elif event.type == pygame.KEYDOWN and event.key == P2_SHOOT:
                 #Check if the other player is ready. If they are, start playing. Otherwise, set yourself as ready.
                 if status == "P1 ready":
                     status = "Play"
@@ -79,9 +81,9 @@ def menu_screen(screen: pygame.Surface):
 
                 #Save the weapon choice
                 if p2_choice == 1:
-                    settings["P2_weapon"] = "Single shot"
+                    settings["P2 weapon"] = "Single shot"
                 elif p2_choice == 2:
-                    settings["P2_weapon"] = "Shotgun"
+                    settings["P2 weapon"] = "Shotgun"
         
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 pygame.display.quit()
@@ -93,7 +95,7 @@ def menu_screen(screen: pygame.Surface):
             draw_choose_weapon_ui(screen, status, p1_choice, p2_choice)
     
     #Short pause so that the game does not begin with one player shooting
-    #sleep(0.5)
+    sleep(0.5)
     return status, settings
 
 

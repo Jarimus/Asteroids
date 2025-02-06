@@ -25,11 +25,11 @@ def main_loop(settings: dict):
     Player1.containers = (updatable, drawable, players)
     Player2.containers = (updatable, drawable, players)
     if settings["player_count"] == 2:
-        player1 = Player1(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2)
+        player1 = Player1(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2, settings["P1 weapon"])
     else:
-        player1 = Player1(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        player1 = Player1(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, settings["P1 weapon"])
     if settings["player_count"] == 2:
-        player2 = Player2(SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT / 2)
+        player2 = Player2(SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT / 2, settings["P2 weapon"])
     else:
         player2 = None
 

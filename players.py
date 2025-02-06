@@ -11,9 +11,10 @@ from shot import Shot
 
 class Player1(CircleShape):
 
-    def __init__(self, x, y):
+    def __init__(self, x: int, y: int, weapon: str):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
+        self.weapon = weapon
         self.recharge = 0
         self.speed = pygame.Vector2(0, 0)
 
@@ -80,25 +81,42 @@ class Player1(CircleShape):
     
     def shoot(self):
         if self.recharge == 0:
-            # After firing, gun has to cool down.
-            self.recharge = PLAYER_SHOOT_COOLDOWN
+            
+            if self.weapon == "Single shot":
 
-            #Fire 3 shots in a spread
-            velocity = pygame.Vector2(0, 1).rotate(self.rotation)*PLAYER_SHOOT_SPEED
-            for i in [-1, 0 ,1]:
+                # Cooldown after firing.
+                self.recharge = PLAYER_SHOOT_COOLDOWN / 3
+
+                # Fire a single shot
                 shot = Shot(self.position.x, self.position.y)
-                shot.velocity = velocity.rotate(15 * i)
+                shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation)*PLAYER_SHOOT_SPEED
 
-            #apply recoil to the player
-            recoil = pygame.Vector2(0,1).rotate(self.rotation + 180) * PLAYER_RECOIL
-            self.speed += recoil
+                #apply recoil to the player
+                recoil = pygame.Vector2(0,1).rotate(self.rotation + 180) * PLAYER_RECOIL * 0.5
+                self.speed += recoil
+
+
+            if self.weapon == "Shotgun":
+
+                # Cooldown after firing.
+                self.recharge = PLAYER_SHOOT_COOLDOWN
+
+                #Fire 3 shots in a spread
+                velocity = pygame.Vector2(0, 1).rotate(self.rotation)*PLAYER_SHOOT_SPEED
+                for i in [-1, 0 ,1]:
+                    shot = Shot(self.position.x, self.position.y)
+                    shot.velocity = velocity.rotate(15 * i)
+
+                #apply recoil to the player
+                recoil = pygame.Vector2(0,1).rotate(self.rotation + 180) * PLAYER_RECOIL
+                self.speed += recoil
             
 
 
 class Player2(Player1):
 
-    def __init__(self, x, y):
-        super().__init__(x, y)
+    def __init__(self, x: int, y: int, weapon: str):
+        super().__init__(x, y, weapon)
 
     def handle_keys(self, dt):
         """Handles feedback for pressing keys"""
